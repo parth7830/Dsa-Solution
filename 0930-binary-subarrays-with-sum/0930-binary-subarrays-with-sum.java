@@ -1,20 +1,15 @@
 class Solution {
-    private int atmost(int[] nums,int goal){
-        if(goal < 0 ) return 0;
-        int n = nums.length;
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        hm.put(0,1);
         int cnt = 0;
-        int low = 0;
-        int sum = 0;
+        int n = nums.length;
+        int prefixsum = 0;
         for(int i = 0;i<n;i++){
-            sum += nums[i];
-            while(sum > goal){
-                sum -= nums[low++];
-            }
-            cnt += i-low+1;
+            prefixsum += nums[i];
+            cnt += hm.getOrDefault(prefixsum-goal,0);
+            hm.put(prefixsum,hm.getOrDefault(prefixsum,0)+1);
         }
         return cnt;
-    }
-    public int numSubarraysWithSum(int[] nums, int goal) {
-        return atmost(nums,goal) - atmost(nums,goal-1);
     }
 }
