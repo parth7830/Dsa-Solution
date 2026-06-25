@@ -1,16 +1,14 @@
 class Solution {
     public int firstUniqChar(String s) {
         int n = s.length();
-        for(int i = 0;i<n;i++){
-            char c = s.charAt(i);
-            boolean o = true;
-            for(int j = 0;j<n;j++){
-                if(i!=j && c == s.charAt(j)){
-                    o = false;
-                    break;
-                }
+        HashMap<Character,Integer> hm = new HashMap<>();
+        for(char c : s.toCharArray()){
+            hm.put(c,hm.getOrDefault(c,0)+1);
+        }
+        for(int i=0;i<n;i++){
+            if(hm.get(s.charAt(i))==1){
+                return i;
             }
-            if(o) return i;
         }
         return -1;
     }
