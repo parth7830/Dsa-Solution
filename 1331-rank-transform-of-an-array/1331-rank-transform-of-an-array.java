@@ -1,12 +1,12 @@
 class Solution {
     public int[] arrayRankTransform(int[] arr) {
-        int[] copy = arr.clone();
-        Arrays.sort(copy);
         int[] result = new int[arr.length];
-
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int num : arr) pq.offer(num);
         HashMap<Integer,Integer> hm = new HashMap<>();
         int rank = 1;
-        for(int num : copy){
+        while(!pq.isEmpty()){
+            int num = pq.poll();
             if(!hm.containsKey(num)){
                 hm.put(num,rank++);
             }
