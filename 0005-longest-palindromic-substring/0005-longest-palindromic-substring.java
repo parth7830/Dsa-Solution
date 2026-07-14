@@ -1,0 +1,27 @@
+class Solution {
+    public String longestPalindrome(String s) {
+        int n = s.length();
+        String ans = "";
+
+        for(int i = 0; i < n; i++){
+            // Odd length palindrome
+            String p1 = expand(s, i, i);
+
+            // Even length palindrome
+            String p2 = expand(s, i, i + 1);
+
+            if(p1.length() > ans.length()) ans = p1;
+            if(p2.length() > ans.length()) ans = p2;
+        }
+
+        return ans;
+    }
+
+    private String expand(String s, int l, int r){
+        while(l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)){
+            l--;
+            r++;
+        }
+        return s.substring(l + 1, r);
+    }
+}
