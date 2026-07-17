@@ -1,14 +1,20 @@
 class Solution {
+    public int getNext(int n) {
+        int total = 0;
+        while (n > 0) {
+            int d = n % 10;
+            total += d * d;
+            n /= 10;
+        }
+        return total;
+    }
     public boolean isHappy(int n) {
-        while(n!=1 && n!=4){
-        int sum = 0;
-        while(n>0){
-            int lastdigit = n%10;
-            sum += lastdigit*lastdigit;
-            n = n/10;
+        int slow = n;
+        int fast = getNext(n);
+        while (fast != 1 && slow != fast) {
+            slow = getNext(slow);
+            fast = getNext(getNext(fast));
         }
-        n = sum;
-        }
-        return n==1;
+        return fast == 1;
     }
 }
