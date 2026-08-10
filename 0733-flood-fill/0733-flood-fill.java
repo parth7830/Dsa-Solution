@@ -3,19 +3,25 @@ class Solution {
         int initc = image[sr][sc];
         int[][] ans = image;
         int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
-        dfs(sr, sc, ans, image, dirs,color,initc);
-        return ans;
-    }
-    private void dfs(int sr,int sc, int[][] ans,int[][] image,int[][] dirs,int color,int initc){
-        ans[sr][sc] = color;
-        int n = image.length;
-        int m = image[0].length;
-        for(int[] dir : dirs){
-            int nr = sr + dir[0];
-            int nc = sc + dir[1];
-            if(nr >= 0 && nr < n && nc >= 0 && nc < m && image[nr][nc] == initc && ans[nr][nc] != color){
-                dfs(nr,nc,ans,image,dirs,color,initc);
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{sr,sc});
+        while(!q.isEmpty()){
+            ans[sr][sc] = color;
+            int size = q.size();
+            for(int i = 0;i<size;i++){
+                int[] curr = q.poll();
+                int r = curr[0];
+                int c = curr[1];
+                for(int[] dir : dirs){
+                    int nr = r + dir[0];
+                    int nc = c + dir[1];
+                    if(nr >= 0 && nr < image.length && nc >= 0 && nc < image[0].length && image[nr][nc] == initc && ans[nr][nc] != color){
+                        ans[nr][nc] = color;
+                        q.offer(new int[]{nr,nc});
+                    }
+                }
             }
         }
+        return ans;
     }
 }
